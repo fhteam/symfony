@@ -27,6 +27,7 @@ trait AbstractTrait
     private $namespaceVersion = '';
     private $versioningIsEnabled = false;
     private $deferred = array();
+    private $isSerialize = true;
 
     /**
      * @var int|null The maximum length to enforce for identifiers or null when no limit applies
@@ -201,6 +202,22 @@ trait AbstractTrait
     }
 
     /**
+     * Like the native serialize()
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    protected static function serialize($value)
+    {
+        if (!$this->isSerialize) {
+            return $value;
+        }
+
+        return serialize($value);
+    }
+
+    /**
      * Like the native unserialize() function but throws an exception if anything goes wrong.
      *
      * @param string $value
@@ -211,6 +228,9 @@ trait AbstractTrait
      */
     protected static function unserialize($value)
     {
+        if (!$this->isSerialize) {
+            return $value;
+        }
         if ('b:0;' === $value) {
             return false;
         }

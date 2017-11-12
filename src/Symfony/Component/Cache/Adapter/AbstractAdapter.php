@@ -140,8 +140,9 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getItem($key)
+    public function getItem($key, bool $isSerialize = true)
     {
+        $this->isSerialize = $isSerialize;
         if ($this->deferred) {
             $this->commit();
         }
@@ -165,8 +166,9 @@ abstract class AbstractAdapter implements AdapterInterface, LoggerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = array())
+    public function getItems(array $keys = array(), bool $isSerialize = true)
     {
+        $this->isSerialize = $isSerialize;
         if ($this->deferred) {
             $this->commit();
         }

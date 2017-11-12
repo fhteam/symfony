@@ -259,7 +259,7 @@ trait RedisTrait
 
         foreach ($values as $id => $value) {
             try {
-                $serialized[$id] = serialize($value);
+                $serialized[$id] = parent::serialize($value);
             } catch (\Exception $e) {
                 $failed[] = $id;
             }
